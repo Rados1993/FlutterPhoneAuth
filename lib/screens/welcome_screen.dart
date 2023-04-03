@@ -58,7 +58,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   height: 50,
                   child: CustomButton(
                     onPressed: () {
-                      if (ap.isSignedIn == false) {
+                      if (ap.isSignedIn == true) {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
