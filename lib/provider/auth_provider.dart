@@ -1,13 +1,17 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:phoneauth/screens/otp_screeen.dart';
+import 'package:phoneauth/utils/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class AuthProvider extends ChangeNotifier {
-
   bool _isSignedIn = false;
   bool get isSignedIn => _isSignedIn;
 
-  AuthProvider(){
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+  AuthProvider() {
     checkSign();
   }
 
@@ -17,4 +21,22 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void signInWithPhone(BuildContext context, String phoneNumber) async {
+    try {
+      await _firebaseAuth.verifyPhoneNumber(
+        phoneNumber: phoneNumber,
+          verificationCompleted: (PhoneAuthCredential phoneAuthCredential) async {
+            await _firebaseAuth.signInWithCredential(phoneAuthCredential);
+          },
+          verificationFailed: (error) {
+            throw Exception(error.message);
+      },
+          codeSent: (verificationId, forceResendingToken) {
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> OtpScreen(verificationId: verificationId),),);
+          },
+          codeAutoRetrievalTimeout: (verificationId) {});
+    } on FirebaseAuthException catch (e) {
+      ScreenUtils.showSnackBar(context, e.message.toString());
+    }
+  }
 }
