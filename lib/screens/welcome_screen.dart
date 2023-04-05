@@ -76,7 +76,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     },
                     text: "Get Started",
                   ),
-
                 )
               ],
             ),

@@ -31,7 +31,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     phoneController.selection = TextSelection.fromPosition(
-      TextPosition(offset: phoneController.text.length));
+        TextPosition(offset: phoneController.text.length));
 
     return Scaffold(
       body: SafeArea(
@@ -76,17 +76,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 TextFormField(
                   cursorColor: Colors.lightBlue,
                   controller: phoneController,
-                  style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500,),
-
+                  style: const TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w500,
+                  ),
                   onChanged: (value) {
                     setState(() {
                       phoneController.text = value;
                     });
-                  } ,
+                  },
                   decoration: InputDecoration(
                     hintText: "Enter phone number",
                     hintStyle: TextStyle(
-                        fontWeight: FontWeight.w400,
+                      fontWeight: FontWeight.w400,
                       fontSize: 14,
                       color: Colors.grey.shade600,
                     ),
@@ -125,17 +127,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                     ///////
-                    suffixIcon: phoneController.text.length > 9 ? Container(
-                      height: 30,
-                      width: 30,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle, color: Colors.green),
-                      child: const Icon(
-                      Icons.done,
-                        color: Colors.white,
-                        size: 20,
-                      ),
-                    ) : null,
+                    suffixIcon: phoneController.text.length > 9
+                        ? Container(
+                            height: 30,
+                            width: 30,
+                            decoration: const BoxDecoration(
+                                shape: BoxShape.circle, color: Colors.green),
+                            child: const Icon(
+                              Icons.done,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                          )
+                        : null,
                     prefixIconConstraints: const BoxConstraints(
                       minWidth: 0,
                       minHeight: 0,
@@ -145,14 +149,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     contentPadding: const EdgeInsets.symmetric(horizontal: 10),
                   ),
                 ),
-                const SizedBox(height: 20,),
+                const SizedBox(
+                  height: 20,
+                ),
                 SizedBox(
                   width: double.infinity,
                   height: 50,
                   child: CustomButton(
-                    text: "Login",
-                    onPressed: () => sendPhoneNumber()
-                  ),
+                      text: "Login", onPressed: () => sendPhoneNumber()),
                 ),
               ],
             ),
@@ -161,10 +165,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
     );
   }
+
   void sendPhoneNumber() {
     final ap = Provider.of<AuthProvider>(context, listen: false);
     String phoneNumber = phoneController.text.trim();
     ap.signInWithPhone(context, "+${selectedCountry.phoneCode}$phoneNumber");
   }
 }
-
