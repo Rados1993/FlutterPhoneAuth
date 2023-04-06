@@ -10,8 +10,8 @@ class AuthProvider extends ChangeNotifier {
   bool get isSignedIn => _isSignedIn;
   bool _isLoading = false;
   bool get isLoading => _isLoading;
-  String? _uid;
-  String get uid => _uid!;
+  late String _uid;
+  String get uid => _uid;
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
@@ -51,7 +51,7 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  void verifyOtp({
+  Future<void> verifyOtp({
     required BuildContext context,
     required String verificationId,
     required String userOtp,
@@ -79,10 +79,8 @@ class AuthProvider extends ChangeNotifier {
     DocumentSnapshot snapshot =
         await _firebaseFirestore.collection("users").doc(_uid).get();
     if (snapshot.exists) {
-      print("USER EXISTS");
       return true;
     } else {
-      print("NEW USER");
       return false;
     }
   }

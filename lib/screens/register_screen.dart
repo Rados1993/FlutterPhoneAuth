@@ -126,7 +126,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                     ),
-                    ///////
                     suffixIcon: phoneController.text.length > 9
                         ? Container(
                             height: 30,
